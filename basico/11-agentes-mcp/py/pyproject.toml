@@ -1,0 +1,9 @@
+[project]
+name = "nortia-agente-soporte-11"
+version = "0.1.0"
+description = "Puente MCP y bucle del agente de soporte de Nortia en Python: lección 11 de desarrollomcp.com"
+requires-python = ">=3.13"
+dependencies = [
+    "anthropic==1.11.0",
+    "mcp==2.2.0",
+]

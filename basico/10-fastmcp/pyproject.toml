@@ -1,0 +1,13 @@
+[project]
+name = "nortia-almacen"
+version = "0.1.0"
+description = "Servidor MCP nortia-almacen en Python (SDK oficial mcp 2.x, protocolo 2026-07-28): lección 10 de desarrollomcp.com"
+requires-python = ">=3.13"
+dependencies = [
+    "mcp[cli]==2.2.0",
+]
+
+[dependency-groups]
+dev = [
+    "pytest==9.1.1",
+]

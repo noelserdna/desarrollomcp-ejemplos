@@ -1,0 +1,5 @@
+{ "mcpServers": {
+  "nortia-pedidos": {
+    "command": "npx", "args": ["tsx", "src/stdio.ts"], "env": { "NORTIA_INQUILINO": "es" }
+  }
+} }

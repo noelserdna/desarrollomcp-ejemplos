@@ -1,0 +1,30 @@
+{
+  "name": "nortia-pedidos-09",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Servidor MCP nortia-pedidos en TypeScript (SDK oficial v2, protocolo 2026-07-28): lección 9 de desarrollomcp.com",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "typecheck": "tsc -p .",
+    "stdio": "tsx src/stdio.ts",
+    "http": "tsx src/http.ts",
+    "cliente": "tsx src/cliente.ts"
+  },
+  "dependencies": {
+    "@modelcontextprotocol/client": "2.3.0",
+    "@modelcontextprotocol/express": "2.0.2",
+    "@modelcontextprotocol/node": "2.1.1",
+    "@modelcontextprotocol/server": "2.3.0",
+    "express": "5.2.1",
+    "zod": "4.6.5"
+  },
+  "devDependencies": {
+    "@types/express": "5.0.6",
+    "@types/node": "26.6.4",
+    "tsx": "4.23.15",
+    "typescript": "7.0.2"
+  }
+}
