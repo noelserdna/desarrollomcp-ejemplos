@@ -9,6 +9,7 @@
   },
   "scripts": {
     "typecheck": "tsc -p .",
+    "test": "node --import tsx --test test/servidores-de-prueba.test.ts",
     "servidores": "tsx src/servidores-de-prueba.ts",
     "demo": "tsx src/demo.ts",
     "vias": "tsx src/vias-claude.ts"

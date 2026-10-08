@@ -67,7 +67,7 @@ def lineas_de(almacen: str) -> list[Existencia]:
 CodigoAlmacen = Annotated[
     str, Field(pattern=r"^[A-Z]{3}-\d{2}$", description="Código de almacén, por ejemplo MAD-01")
 ]
-SOLO_LECTURA = ToolAnnotations(read_only_hint=True, open_world_hint=False)
+SOLO_LECTURA = ToolAnnotations(read_only_hint=True, destructive_hint=False, idempotent_hint=True, open_world_hint=False)
 
 
 @mcp.tool(title="Consultar existencias", annotations=SOLO_LECTURA)

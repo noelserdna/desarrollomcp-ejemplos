@@ -19,7 +19,9 @@ async def client():
 async def test_el_modelo_no_puede_elegir_inquilino(client: Client):
     for tool in (await client.list_tools()).tools:
         assert "inquilino" not in tool.input_schema["properties"]
-        assert tool.annotations.read_only_hint is True
+        assert tool.annotations.model_dump(exclude_none=True) == {
+            "read_only_hint": True, "destructive_hint": False, "idempotent_hint": True, "open_world_hint": False
+        }
 
 
 @pytest.mark.anyio

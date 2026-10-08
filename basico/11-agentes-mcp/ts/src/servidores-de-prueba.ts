@@ -17,7 +17,7 @@ function nortiaPedidos(): McpServer {
         {
             description: 'Devuelve estado, factura y almacén de un pedido. Formato del id: PED-2026-004812.',
             inputSchema: z.object({ pedido_id: z.string() }),
-            annotations: { readOnlyHint: true }
+            annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false }
         },
         async ({ pedido_id }) => {
             const pedido = pedidos.get(pedido_id);
@@ -34,7 +34,7 @@ function nortiaFacturacion(): McpServer {
         {
             description: 'Devuelve total, moneda e importe ya abonado de una factura. Formato del id: F-2026-0142.',
             inputSchema: z.object({ factura_id: z.string() }),
-            annotations: { readOnlyHint: true }
+            annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false }
         },
         async ({ factura_id }) => {
             await new Promise(resolve => setTimeout(resolve, RETARDO_MS));
@@ -47,7 +47,7 @@ function nortiaFacturacion(): McpServer {
         {
             description: 'Emite un abono parcial o total sobre una factura. Tiene efecto contable inmediato.',
             inputSchema: z.object({ factura_id: z.string(), importe: z.number().positive(), motivo: z.string().min(10) }),
-            annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false }
+            annotations: { readOnlyHint: false, destructiveHint: true, idempotentHint: false, openWorldHint: false }
         },
         async ({ factura_id: id, importe, motivo }) => {
             await new Promise(resolve => setTimeout(resolve, RETARDO_MS));

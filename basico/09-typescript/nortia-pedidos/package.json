@@ -9,6 +9,7 @@
   },
   "scripts": {
     "typecheck": "tsc -p .",
+    "test": "node --import tsx --test test/servidor.test.ts",
     "stdio": "tsx src/stdio.ts",
     "http": "tsx src/http.ts",
     "cliente": "tsx src/cliente.ts"

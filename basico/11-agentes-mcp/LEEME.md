@@ -44,6 +44,31 @@ npx tsc -p .
 
 Termina sin errores.
 
+## Tests de los servidores de prueba (TypeScript)
+
+```bash
+cd ts
+npm test
+```
+
+Ejecuta `test/servidores-de-prueba.test.ts` con el runner de Node (`node --import tsx --test`), sin dependencias nuevas. El test arranca `src/servidores-de-prueba.ts` como proceso hijo en un puerto libre (no hace falta tenerlos abiertos ni deja el 3211 ocupado), se conecta a los dos endpoints con el cliente oficial por Streamable HTTP y comprueba:
+
+- que se negocia 2026-07-28 y que las tres tools se listan con sus cuatro anotaciones: `buscar_pedido` y `buscar_factura` de solo lectura (`readOnlyHint: true`, `destructiveHint: false`, `idempotentHint: true`, `openWorldHint: false`) y `emitir_abono` destructiva y no idempotente (`readOnlyHint: false`, `destructiveHint: true`, `idempotentHint: false`, `openWorldHint: false`);
+- la llamada correcta de cada tool, incluido el abono, que se contabiliza y cambia lo abonado de la factura;
+- los errores de negocio con `isError: true` (pedido o factura inexistentes, importe mayor que lo abonable, motivo demasiado corto);
+- que una tool desconocida es un error de protocolo (`ProtocolError` -32602).
+
+Salida esperada (final):
+
+```text
+ℹ tests 10
+ℹ suites 2
+ℹ pass 10
+ℹ fail 0
+```
+
+`openWorldHint: false` en `emitir_abono` refleja que la tool solo toca el sistema de facturación propio, no entidades externas. Recuerda que las anotaciones son pistas: el puente no se fía de ellas y decide la aprobación con su propia lista (`sinAprobacion`).
+
 ## Ejecutar la demo
 
 En una terminal, arranca los servidores de prueba y déjalos abiertos:

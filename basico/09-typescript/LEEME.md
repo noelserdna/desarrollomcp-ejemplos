@@ -35,7 +35,30 @@ npm ci
 npx tsc -p .
 ```
 
-No escribe nada (`noEmit`) y termina sin errores. Los archivos `.ts` se ejecutan directamente con `tsx`.
+No escribe nada (`noEmit`) y termina sin errores. Comprueba también los tests. Los archivos `.ts` se ejecutan directamente con `tsx`.
+
+## Tests
+
+```bash
+npm test
+```
+
+Ejecuta `test/servidor.test.ts` con el runner de Node (`node --import tsx --test`), sin dependencias nuevas. El servidor y el cliente oficiales se conectan en el mismo proceso, sin red ni procesos hijos, y las mismas siete comprobaciones se repiten en las dos eras del protocolo: 2026-07-28 (pasando `handler.fetch` de `createMcpHandler` como `fetch` del `StreamableHTTPClientTransport`) y 2025-11-25 (`InMemoryTransport.createLinkedPair()`, que solo conecta esa era). Comprueban:
+
+- que `buscar_pedido` se lista con sus cuatro anotaciones (`readOnlyHint: true`, `destructiveHint: false`, `idempotentHint: true`, `openWorldHint: false`);
+- la llamada correcta, con el pedido en `structuredContent` y sin el inquilino;
+- los errores de negocio con `isError: true` (pedido inexistente, pedido de otro inquilino y formato inválido, que no llega al handler);
+- que una tool desconocida es un error de protocolo (`ProtocolError` -32602);
+- y lo que queda en la auditoría (nada en el caso del formato inválido).
+
+Salida esperada (final):
+
+```text
+ℹ tests 14
+ℹ suites 2
+ℹ pass 14
+ℹ fail 0
+```
 
 ## Probar por stdio con el cliente mínimo
 
@@ -49,7 +72,7 @@ Salida esperada (resumida):
 
 ```text
 versión: 2026-07-28 {"name":"nortia-pedidos","version":"1.4.0"}
-tools: [["buscar_pedido",{"readOnlyHint":true,"openWorldHint":false}]]
+tools: [["buscar_pedido",{"readOnlyHint":true,"destructiveHint":false,"idempotentHint":true,"openWorldHint":false}]]
 ...
 1) pedido: PED-2026-004812 en_reparto 2026-10-02
 2) no existe: {"isError":true,"content":[{"type":"text","text":"No existe el pedido PED-2026-999999 en este entorno. ..."}]}
@@ -119,5 +142,6 @@ Están descritas en `.env.example`. No se leen de ningún archivo: pásalas en l
 | `src/stdio.ts` | Punto de entrada por stdio |
 | `src/http.ts` | Punto de entrada por Streamable HTTP sin estado |
 | `src/cliente.ts` | Cliente mínimo que recorre los diez casos |
+| `test/servidor.test.ts` | Tests de la tool en memoria, en las dos eras del protocolo |
 | `peticion.json` | Cuerpo de la petición HTTP de ejemplo |
 | `.inspector/config.json` | Configuración del Inspector |

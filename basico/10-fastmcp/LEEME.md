@@ -4,7 +4,7 @@ Código de la lección [Servidor en Python](https://desarrollomcp.com/aprende/10
 
 Es el servidor `nortia-almacen` de Nortia Logística escrito con el SDK oficial de Python (`mcp` 2.2.0, clase `MCPServer`), que habla la versión 2026-07-28 del protocolo. Con él ves:
 
-- Tools definidas con decoradores, tipos y modelos de Pydantic (`consultar_existencias`, `alertas_rotura_stock`), con salida estructurada y anotaciones de solo lectura.
+- Tools definidas con decoradores, tipos y modelos de Pydantic (`consultar_existencias`, `alertas_rotura_stock`), con salida estructurada y anotaciones completas de solo lectura (`read_only_hint=True`, `destructive_hint=False`, `idempotent_hint=True`, `open_world_hint=False`: los datos están en memoria, no tocan sistemas externos).
 - Un resource fijo (`almacen://almacenes`), uno con plantilla (`almacen://{almacen}/existencias`) y un prompt (`plan_reposicion`).
 - Errores para el modelo con `ToolError` y errores de protocolo con `ResourceNotFoundError`; un fallo imprevisto no filtra detalles internos.
 - Multi-tenant: el inquilino lo fija `NORTIA_INQUILINO` al desplegar, nunca un argumento de la tool.
@@ -43,6 +43,8 @@ Salida esperada:
 .....                                                                    [100%]
 5 passed in 0.30s
 ```
+
+Los cinco tests usan el cliente en memoria (`Client(servidor.mcp)`) y cubren las dos tools: que ninguna acepta el inquilino como argumento y que las dos declaran las cuatro anotaciones, la salida estructurada de `consultar_existencias`, el error de negocio (`is_error`) con un almacén de otro inquilino, que un fallo interno de `alertas_rotura_stock` no filtra detalles, y que un resource inexistente es un error de protocolo (-32602). Para ver el nombre de cada test: `uv run pytest -v test_servidor.py`.
 
 ## Probar por stdio con el cliente
 

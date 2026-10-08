@@ -52,7 +52,7 @@ export function crearServidor({ repo, inquilino, auditar }: Dependencias): McpSe
                 'No busca por cliente ni por fecha.',
             inputSchema: z.object({ pedido_id: idPedido }),
             outputSchema: pedidoSchema,
-            annotations: { readOnlyHint: true, openWorldHint: false }
+            annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false }
         },
         async ({ pedido_id }) => {
             const pedido = await repo.buscarPorId(inquilino, pedido_id);
