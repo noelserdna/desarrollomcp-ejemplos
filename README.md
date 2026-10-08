@@ -1,5 +1,7 @@
 # Ejemplos del curso de MCP de DesarrolloMCP
 
+[![M8ven Score](https://m8ven.ai/badge/mcp/noelserdna/desarrollomcp-ejemplos)](https://m8ven.ai/mcp/noelserdna/desarrollomcp-ejemplos?s=readme)
+
 Código ejecutable del [curso de Model Context Protocol en español](https://desarrollomcp.com/aprende) de DesarrolloMCP, escrito para la especificación **MCP 2026-07-28** (el protocolo sin estado) y los SDK oficiales de TypeScript y Python.
 
 Todos los ejemplos siguen el mismo caso, Nortia Logística: una empresa ficticia de logística con operaciones en España y México. Ninguno es una calculadora ni un "hola mundo".
